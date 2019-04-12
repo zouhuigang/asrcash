@@ -3,9 +3,26 @@
 ##### 最近需要用到语音转文字的接口，找到百度语音识别和讯飞语音识别。然后自己录制一些音频上去识别，发现全都识别不了，都是"嗯嗯嗯"或者为""的返回。询问大神才发现，语音还有不同的采样率单声道多声道之类的，必须上传接口能够正确解析的音频文件，才能够正确解析出来。同样的格式，采样率不一样，是解析不出来的。
 
 
+###百度语音包下载
+
+	https://ai.baidu.com/sdk#asr
 
 
+### python测试
 
+	pip install baidu-aip
+	pip install ffmpy
+
+
+### linux测试
+
+	g++ --version
+
+	sample目录下有三个实例工程
+
+	sample/asr 运行 sh build_and_run.sh
+	sample/asrDemo2 下 run目录中运行 sh build_and_run.sh 。同时也是为Clion工程
+	sample/asrDemo-srt 阅读该目录下的readme文件，再运行
 
 
 

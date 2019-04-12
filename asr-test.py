@@ -26,4 +26,4 @@ print(audios)
 
 #从字典中取出文字
 wd = audios.get('result')
-print(wd)
+print(wd,wd[0],str(wd),type(wd))
