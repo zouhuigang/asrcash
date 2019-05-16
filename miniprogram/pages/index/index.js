@@ -10,7 +10,8 @@ Page({
     audioPath: null,//语音路径
     duration: null,//总时长,
     playBtn:true,//播放，暂停按钮,
-    resultTxt:null
+    resultTxt:null,
+    isShowAhturoizeWarning:true
   },
   onLoad: function () {
     
@@ -91,9 +92,9 @@ Page({
   uploadFile(){
         var __this=this;
         wx.uploadFile({
-          url: "https://c3.yyang.net.cn/api/v1.0/cash/asr",
+          url: "http://c3.ab.51tywy.com/api/v1.0/cash/asr",
           filePath: __this.data.audioPath,
-          name: 'file',
+          name: 'audio',
           header: {
             'content-type': 'multipart/form-data'
           },
@@ -110,6 +111,32 @@ Page({
             console.log(res);
           }
         });
+  },
+  //登录获取code
+  getUserInfo: function () {
+      wx.login({
+        success(res) {
+          var code = res.code;//登录凭证
+          console.log('获取用户信息code=', code)
+          if (code) {
+              //2、调用获取用户信息接口
+              wx.getUserInfo({
+                withCredentials: true,
+                success: function (res) {
+                  console.log({ encryptedData: res.encryptedData, iv: res.iv, code: code })
+                  //3.解密用户信息 获取unionId
+                  //...
+                },
+                fail: function () {
+                  console.log('获取用户信息失败')
+                }
+              })
+
+          } else {
+            console.log('登录失败！' + res.errMsg)
+          }
+        }
+      })
   }
 
 })

@@ -1,0 +1,12 @@
+
+*.bin
+
+linux-cpp-sdk/\.vscode/ipch/85ad535436b15d5b/yours_main\.ipch
+
+linux-cpp-sdk/sample/asrDemo2/\.idea/codeStyles/
+
+linux-cpp-sdk/sample/asrDemo2/\.idea/
+
+linux-cpp-sdk/sample/asr/core
+
+*.gz

@@ -1,40 +1,41 @@
 #!/usr/bin/python
 # -*- coding:utf-8 -*-
-# from ctypes import cdll
 import ctypes
 import json
-
-# libasr = ctypes.cdll.LoadLibrary("./libasr.so")
-# # result1=libasr.max(1,2)
-# # result2=libasr.test(123,bytes("中国","utf8"),bytes("aass中国人bbb1232","utf8"))
-# # result3=libasr.speek(bytes("/home/wwwroot/asrcash/pcm/16k-0.pcm","utf8"))
-# result3.restype = ctypes.c_char_p
-# # result3.argtypes = [c_char_p]
-
-# print("result1:%d,result2:%d,result3:%s" % (result1,result2,result3))
-
+import time
 
 so = ctypes.cdll.LoadLibrary
-lib = so('./libasr.so')
+lib = so('./libasrv2.so')
+
+# result1=lib.max(1,2)
+# print(result1)
 
 #解析返回的c++ string
+# cp /home/linux-cpp-sdk/sample/asr/src/libasr.so /home/wwwroot/asrcash/libasr.so
+# cp /home/linux-cpp-sdk/sample/asrDemo2/run/lib/libasrdemoall.so /home/wwwroot/asrcash/libasrdemoall.so
+# mv /home/linux-cpp-sdk/sample/asrDemo2/src/libasrv2.so /home/wwwroot/asrcash/libasrv2.so
 lib.speek.restype = ctypes.c_char_p
-params=[
-"/home/wwwroot/asrcash/pcm/16k-0.pcm",
-"/home/wwwroot/asrcash/pcm/20190410_115435.pcm",
-"/home/wwwroot/asrcash/pcm/20190410_133459.pcm"]
+params=["/home/wwwroot/account-book/api/app/upload/5/audio/35034d9a-f437-47fa-838e-04acd9eb207d.pcm"]
+start =time.perf_counter()
 sv=lib.speek(bytes(json.dumps(params),"utf8"))
-# sv=lib.speek(bytes("/home/wwwroot/asrcash/pcm/20190410_115435.pcm","utf8"))
+end = time.perf_counter()
+print('Running time: %s Seconds'%(end-start))
 
-# resultDict=json.loads(str(resultTxt), strict=False)
-# sv = b'\xe9\x82\xb9\xe6\x85\xa7\xe5\x88\x9a'
-
-#替换里面的中文
-# sv=b'{"name": "json","b": "\xe9\x82\xb9\xe6\x85\xa7\xe5\x88\x9a"}'
 print(sv.decode('utf-8'))
 
 
-# print(resultTxt,type(resultTxt),str(resultTxt),sv.decode('utf-8'))
+'''
+g++ -shared -o src/libasr.so  ./src/asr.cpp -I../../include -I../../include/ASR  
+-Wall -O0 -fPIC -g -D__LINUX__ -Wno-unknown-pragmas -D_GLIBCXX_USE_CXX11_ABI=0  
+-std=c++11 ../../lib/libBDSpeechSDK.a ../../extern/lib/libjsoncpp.a 
+../../extern/lib/libcurl.a ../../extern/lib/libiconv.a 
+../../extern/lib/libz.a ../../extern/lib/libssl.a 
+../../extern/lib/libcrypto.a ../../extern/lib/libuuid.a -lrt -ldl -lpthread 
 
-#https://www.kancloud.cn/lanyulei/python/357700
-#http://www.mamicode.com/info-detail-2334929.html
+
+---
+
+g++ -shared -fPIC -g yours_main.cpp   -L../../../lib -L../../../extern/lib \
+-lBDSpeechSDK -lcurl -liconv -lz -lssl -lcrypto -luuid  \
+-lrt -ldl -lpthread  -o  lib/libasrdemoall.so
+'''

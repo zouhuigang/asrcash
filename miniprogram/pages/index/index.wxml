@@ -9,4 +9,14 @@
     <view>总时长:{{duration}}</view>
   </view>
   <view class="result">语音识别结果:{{resultTxt}}</view>
+
+
+  <!-- 此处时拒绝授权的警告窗口，如果用户点击拒绝，则会弹出这个窗口，确定按钮再次绑定授权弹窗事件。 -->
+    <view class="footer" hidden="{{!isShowAhturoizeWarning}}">
+      <button open-type="getUserInfo" bindgetuserinfo="getUserInfo">获取用户信息</button>
+      <open-data type="groupName" open-gid="xxxxxx"></open-data>
+      <open-data type="userAvatarUrl"></open-data>
+      <open-data type="userGender" lang="zh_CN"></open-data>
+    </view>
+
 </view>

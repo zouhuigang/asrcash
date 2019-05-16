@@ -4,6 +4,7 @@
 #pip install baidu-aip
 from aip import AipSpeech
 import os
+import time
 
 #API使用参考地址：https://ai.baidu.com/docs#/ASR-Online-Python-SDK/top
 
@@ -18,11 +19,13 @@ client = AipSpeech(APP_ID,API_KEY,SECRET_KEY)
 def get_file_content(filePath):
     with open(filePath,'rb') as fp:
         return fp.read()
-audio = get_file_content("/home/wwwroot/asrcash/pcm/20190410_133656.pcm")
+audio = get_file_content("/home/wwwroot/account-book/api/app/upload/5/audio/35034d9a-f437-47fa-838e-04acd9eb207d.pcm")
 
 #调取接口,带参数
+start =time.perf_counter()
 audios = client.asr(audio,'pcm',16000,{'dev_pid':1536,})
-print(audios)
+end = time.perf_counter()
+print('Running time: %s Seconds'%(end-start))
 
 #从字典中取出文字
 wd = audios.get('result')
